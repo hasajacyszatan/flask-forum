@@ -24,18 +24,18 @@
     <div class="container">
       <nav class="navbar">
         <ul>
-          {% if not login == "Nie zalogowany" %}
-          <a href="/dodaj"><button class="btn btn-primary"> Dodaj post </button></a>
+          {% if not login == "Not logged in" %}
+          <a href="url_for('addpost')"><button class="btn btn-primary"> Add post </button></a>
           {% if postmanagment %}
-          <a href="{{url_for('adddzial')}}"><button class="btn btn-primary">dodaj dzial</button></button></a>
+          <a href="{{url_for('adddzial')}}"><button class="btn btn-primary">add section</button></button></a>
           {% endif %}
-          <a href="/logout"><button class="btn btn-primary">Wyloguj się</button></a>
+          <a href="/logout"><button class="btn btn-primary">Logout</button></a>
             {% if usersmanagment %}
-            <a href="/admin/users"><button class="btn btn-primary">Zarządzanie użytkownikami</button></a>
+            <a href="/admin/users"><button class="btn btn-primary">Users management</button></a>
             {% endif %}
           {% else %}
-          <a href="/rejestracja"><button class="btn btn-primary"> Zarejestruj się </button></a>
-          <a href="/login"><button class="btn btn-primary">Zaloguj się</button></a>
+          <a href="/rejestracja"><button class="btn btn-primary"> Register </button></a>
+          <a href="/login"><button class="btn btn-primary">Log in</button></a>
           {% endif %}
         </ul>
           
@@ -47,14 +47,14 @@
           <img class="profilephoto rounded-circle" src="{{url_for('profilowka')}}">
           </div>
             <div class="col-8">
-            <b>Użytkownik:</b> {{login}}
+            <b>User:</b> {{login}}
           </div>
           </div>
         </ul>
       </a>
       </nav>
       <div class="row">
-                      <!-- <a href=""><button class="btn btn-primary">usuń</button></a> -->
+                      <!-- <a href=""><button class="btn btn-primary">remove</button></a> -->
        {% for i in range(iloscdzialow) %}
         <div class="col-12, col-md-6 col-sm-offset-1">
        <a href="{{url_for(typ, postid=dzialy[i].id)}}">
@@ -68,9 +68,9 @@
 
               {% if postmanagment %}
               {%if typ=="post"%}
-              <a style="float: right;"  href="{{ url_for('removepost', postid=dzialy[i].id) }}"><button class="btn btn-danger">usuń</button></a>
+              <a style="float: right;"  href="{{ url_for('removepost', postid=dzialy[i].id) }}"><button class="btn btn-danger">remove</button></a>
               {% else %}
-              <a style="float: right;"  href="{{ url_for('removedzial', dzialid=dzialy[i].id) }}"><button class="btn btn-danger">usuń</button></a>
+              <a style="float: right;"  href="{{ url_for('removedzial', dzialid=dzialy[i].id) }}"><button class="btn btn-danger">remove</button></a>
               {% endif %}
               {% endif %}
             </div>

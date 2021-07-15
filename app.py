@@ -119,7 +119,7 @@ def index():
      try:
           login=flasksession["user_name"]
      except:
-          login="Nie zalogowany"
+          login="Not logged in"
      return(render_template('index.html',
      dzialy=dzialy,
      iloscdzialow=int(len(dzialy)),
@@ -129,8 +129,8 @@ def index():
      typ="dzial"
      ))
 # @app.route("/postmanagment")
-@app.route("/dodaj", methods = ['POST', 'GET'])
-def dodaj():
+@app.route("/addpost", methods = ['POST', 'GET'])
+def addpost():
      if sprawdzenierangi("addingpost") == True:
           if request.method == 'POST':
                # tytul, tresc, autorid, dzial
@@ -169,7 +169,7 @@ def dzial(postid):
      try:
           login=flasksession["user_name"]
      except:
-          login="Nie zalogowany"
+          login="Not logged in"
           usersmanagment=False
      for i in posty:
           try:

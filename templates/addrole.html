@@ -12,7 +12,7 @@
   <body>
     <div class="container">
       <div class="card">
-        <div class="card-header"><h1>Dodaj role</h1></div>
+        <div class="card-header"><h1>add rank</h1></div>
         <div class="card-body">
           <form method="POST">
             <!-- name, addingpost, usersmanagment, modyfingrules -->
@@ -20,16 +20,16 @@
               <br>
               <br>
               <input type="checkbox" id="addingpost" name="addingpost">
-              <label for="addingpost"><b>dododawanie postu</b> - Zaznaczenie tej opcji powoduje że użytkownik będzie miał możliwość dodawania postów</label>
+              <label for="addingpost"><b>adding posts</b> - Permission to adding posts</label>
               <br>
               <input type="checkbox" id="postmanagment" name="postmanagment">
-              <label for="postmanagment"><b>Zarządzanie postami</b> - Zaznaczenie tej opcji daje użytkownikowi możliwość modyfikowania ról(dostęp do tego menu)</label>
+              <label for="postmanagment"><b>Posts management</b> - Permission to remove posts</label>
               <br>
               <input type="checkbox" id="usersmanagment" name="usersmanagment">
-              <label for="usersmanagment"><b>zarządzanie innymi użytkownikami</b> - Zaznaczenie tej opcji daje użytkownikowi możliwość usuwania i zmieniania rol użytkowników</label>
+              <label for="usersmanagment"><b>Managing other users</b> - Permission to removing users and changing their ranks</label>
               <br>
               <input type="checkbox" id="modyfingrules" name="modyfingrules">
-              <label for="modyfingrules"><b>Modyfikownie ról</b> - Zaznaczenie tej opcji daje użytkownikowi możliwość modyfikowania ról(dostęp do tego menu)</label>
+              <label for="modyfingrules"><b>rank management</b> - Permission to adding and removing ranks</label>
               <br>
               <button class="btn btn-primary" action="submit">Dodaj</button>
           </form>
