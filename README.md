@@ -1,7 +1,7 @@
 # flask-forum
 forum written for learning purposes using SQLalchemy and flask
 # How to install
-instal requistments
+install requirements
 
 
 ```pip install sqlalchemy flask```
@@ -10,9 +10,7 @@ instal requistments
 clone repository
 
 
-```
-git clone https://github.com/hasajacyszatan/flask-forum
-```
+```git clone https://github.com/hasajacyszatan/flask-forum```
 
 and it's ready to use you, can start it using
 
