@@ -4,23 +4,17 @@ forum written for learning purposes using SQLalchemy and flask
 instal requistments
 
 
-'''pip install sqlalchemy flask'''
+```pip install sqlalchemy flask```
 
 
 clone repository
 
 
-'''
+```
 git clone https://github.com/hasajacyszatan/flask-forum
-'''
+```
 
 and it's ready to use you, can start it using
 
 
-'''flask run'''
-
-
-or
-
-
-'''python3 app.py'''
+```flask run``` or ```python3 app.py```
