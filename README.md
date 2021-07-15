@@ -1,6 +1,6 @@
 # flask-forum
 forum written for learning purposes using SQLalchemy and flask
-#How to install
+# How to install
 instal requistments
 
 
