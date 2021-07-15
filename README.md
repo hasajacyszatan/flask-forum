@@ -1,4 +1,4 @@
-# flask-forum
+# Flask-forum
 forum written for learning purposes using SQLalchemy and flask
 # How to install
 install requirements
@@ -16,12 +16,12 @@ and it's ready to use you, can start it using
 
 ```flask run``` or ```python3 app.py```
 
-# screenshots
-main page with forum sections
+# Screenshots
+Main page with forum sections
 ![image](https://raw.githubusercontent.com/hasajacyszatan/flask-forum/main/screenshots/screenshot%201.png)
-section page
+Section page
 ![image](https://raw.githubusercontent.com/hasajacyszatan/flask-forum/main/screenshots/screenshot%202.png)
-post page
+Post page
 ![image](https://raw.githubusercontent.com/hasajacyszatan/flask-forum/main/screenshots/screenshot%203.png)
-user managment page
+User managment page
 ![image](https://raw.githubusercontent.com/hasajacyszatan/flask-forum/main/screenshots/screenshot%204.png)
