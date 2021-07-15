@@ -1,0 +1,86 @@
+<!doctype html>
+  {% block head %}
+<html>
+  <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>        
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+    <title>tytul</title>
+    <style type="text/css">
+      .col-md-3{
+        margin-bottom: 1%;
+      }
+      .profilephoto{
+        height: auto;
+        width: 50px;
+        /*position: absolute;*/
+      }
+    </style>
+  </head>
+  {% endblock %}
+  <body>
+    <div class="container">
+      <nav class="navbar">
+        <ul>
+          {% if not login == "Nie zalogowany" %}
+          <a href="/dodaj"><button class="btn btn-primary"> Dodaj post </button></a>
+          {% if postmanagment %}
+          <a href="{{url_for('adddzial')}}"><button class="btn btn-primary">dodaj dzial</button></button></a>
+          {% endif %}
+          <a href="/logout"><button class="btn btn-primary">Wyloguj się</button></a>
+            {% if usersmanagment %}
+            <a href="/admin/users"><button class="btn btn-primary">Zarządzanie użytkownikami</button></a>
+            {% endif %}
+          {% else %}
+          <a href="/rejestracja"><button class="btn btn-primary"> Zarejestruj się </button></a>
+          <a href="/login"><button class="btn btn-primary">Zaloguj się</button></a>
+          {% endif %}
+        </ul>
+          
+        </ul>
+        <a href="{{url_for('zarzadzaniekontem')}}">
+        <ul class="nav navbar-nav">
+          <div class="row">
+          <div class="col-4">
+          <img class="profilephoto rounded-circle" src="{{url_for('profilowka')}}">
+          </div>
+            <div class="col-8">
+            <b>Użytkownik:</b> {{login}}
+          </div>
+          </div>
+        </ul>
+      </a>
+      </nav>
+      <div class="row">
+                      <!-- <a href=""><button class="btn btn-primary">usuń</button></a> -->
+       {% for i in range(iloscdzialow) %}
+        <div class="col-12, col-md-6 col-sm-offset-1">
+       <a href="{{url_for(typ, postid=dzialy[i].id)}}">
+          <div class="card">
+            <div class="card-header">
+              {{dzialy[i].tytul}}
+              {% if typ == "post" %}
+              <br>
+              <div class="badge badge-primary">{{autors[i]}}</div>
+              {% endif %}
+
+              {% if postmanagment %}
+              {%if typ=="post"%}
+              <a style="float: right;"  href="{{ url_for('removepost', postid=dzialy[i].id) }}"><button class="btn btn-danger">usuń</button></a>
+              {% else %}
+              <a style="float: right;"  href="{{ url_for('removedzial', dzialid=dzialy[i].id) }}"><button class="btn btn-danger">usuń</button></a>
+              {% endif %}
+              {% endif %}
+            </div>
+            <div class="card-body">{{dzialy[i].tresc[:120]}}</div>
+          </div>
+        </div>
+        </a>
+      </a>
+        {% endfor %}
+      </div>
+    </div>
+  </body>
+</html>

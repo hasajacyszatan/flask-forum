@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+  <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>        
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+  </head>
+    <title>{{konto.name}}</title>
+    <style type="text/css">
+      .nick{
+        border: none;
+        background-color: #00000000;
+      }
+      .profilephoto{
+        height: 100px;
+      }
+      .inputimage{
+        position: absolute;
+        opacity: 0%;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card ">
+        <div class="card-header"><h1>Zarządzanie kontem</h1><span>kliknij by edytować</span><a style="float: right;" href="/admin/users/{{konto.id}}/remove"><button class="btn btn-primary">usuń konto</button></a></div>
+        <div class="card-body">
+          <div class="row">
+          <div class="col-md-2 col-12 text-center">
+            <form method="POST" action="{{url_for('changeprofilephoto')}}">
+            <input name="file" accept="image/*" class="inputimage" onchange="form.submit()" type="file">
+            <img class="profilephoto rounded-circle" src="{{url_for('profilowka')}}">
+            </form>
+          </div>
+          <div class="col-md-10 col-12">
+          <h2 class="text-center"> <b>Użytkownik:</b><form method="POST"><input placeholder="{{konto.name}}" type="text" name="nick" class="nick w-100 text-center"></form></h2>
+          <h2><span class="badge badge-dark badge-pill">{{rola}}</span></h2>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

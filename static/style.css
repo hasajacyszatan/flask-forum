@@ -1,0 +1,19 @@
+.container{
+	margin-top: 2%;
+}
+.row{
+	margin-top: 1%;
+}
+body{
+	background-color: #666;
+}
+a{
+	text-decoration: None;
+	color: black;
+}
+.nav{
+	color: wheat;
+}
+.col-sm-offset-1{
+margin-top: 1em;
+}
