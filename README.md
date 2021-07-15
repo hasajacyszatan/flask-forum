@@ -17,11 +17,11 @@ and it's ready to use you, can start it using
 ```flask run``` or ```python3 app.py```
 
 # screenshots
-**main page with forum sections**
+main page with forum sections
 ![image](https://raw.githubusercontent.com/hasajacyszatan/flask-forum/main/screenshots/screenshot%201.png)
-**section page**
+section page
 ![image](https://raw.githubusercontent.com/hasajacyszatan/flask-forum/main/screenshots/screenshot%202.png)
-**post page**
+post page
 ![image](https://raw.githubusercontent.com/hasajacyszatan/flask-forum/main/screenshots/screenshot%203.png)
-**user managment page**
+user managment page
 ![image](https://raw.githubusercontent.com/hasajacyszatan/flask-forum/main/screenshots/screenshot%204.png)
