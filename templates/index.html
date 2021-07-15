@@ -57,15 +57,8 @@
                       <!-- <a href=""><button class="btn btn-primary">remove</button></a> -->
        {% for i in range(iloscdzialow) %}
         <div class="col-12, col-md-6 col-sm-offset-1">
-       <a href="{{url_for(typ, postid=dzialy[i].id)}}">
           <div class="card">
             <div class="card-header">
-              {{dzialy[i].tytul}}
-              {% if typ == "post" %}
-              <br>
-              <div class="badge badge-primary">{{autors[i]}}</div>
-              {% endif %}
-
               {% if postmanagment %}
               {%if typ=="post"%}
               <a style="float: right;"  href="{{ url_for('removepost', postid=dzialy[i].id) }}"><button class="btn btn-danger">remove</button></a>
@@ -73,12 +66,17 @@
               <a style="float: right;"  href="{{ url_for('removedzial', dzialid=dzialy[i].id) }}"><button class="btn btn-danger">remove</button></a>
               {% endif %}
               {% endif %}
+            <a href="{{url_for(typ, postid=dzialy[i].id)}}">
+              {{dzialy[i].tytul}}
+            </a>
+              {% if typ == "post" %}
+              <br>
+              <div class="badge badge-primary">{{autors[i]}}</div>
+              {% endif %}
             </div>
             <div class="card-body">{{dzialy[i].tresc[:120]}}</div>
           </div>
         </div>
-        </a>
-      </a>
         {% endfor %}
       </div>
     </div>

@@ -52,13 +52,13 @@
               {% for i in range(ilosckomentarzy) %}
               <div class="card" style="margin: 2%; color:black ;">
                 <div class="card-header">
+                  {% if postmanagment %}
+                  <a href="{{url_for('removecomment', commentid=komentarze[i].id)}}" style="float: right;"><button class="btn btn-danger">remove</button></a>
+                  {% endif %}
                   <h4>{{autors[i]}}</h4>
                 </div>
                 <div class="card-body">
                   {{komentarze[i].comment}}
-                  {% if postmanagment %}
-                  <a href="{{url_for('removecomment', commentid=komentarze[i].id)}}" style="float: right;"><button class="btn btn-danger">remove</button></a>
-                  {% endif %}
                 </div>
               </div>
             {% endfor %}
