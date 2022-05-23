@@ -1,30 +1,27 @@
-from sqlalchemy.sql import func
-from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Boolean, Column, Integer, String, desc, update, create_engine, ForeignKey, DateTime
 from flask import Flask, render_template, abort, request, redirect, g, session as flasksession, send_file, url_for
+from flask_sqlalchemy import SQLAlchemy
 import bcrypt
 import os
 import requests
 # import datetime
 # from werkzeug.utils import secure_filename
 app = Flask(__name__, static_folder='static')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///base.db'
 
-app.secret_key = 'SECRET_KEY'
+app.secret_key = 'paifdshfaphfiapodufh2o83108u230219u32103u2139821uuhfaudoshdf___2137'
 # app.config['UPLOAD_FOLDER'] = "static/profilephotos"
 # UPLOAD_FOLDER = '/static/profilephotos'
 # ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
-posty=dict()
-autors=list()
-Base = declarative_base()
-class Ranga(Base):
-     __tablename__="rangi"
-     id = Column(Integer(), primary_key=True)
-     name = Column(String, unique=True)
-     addingpost = Column(Boolean)
-     postmanagment = Column(Boolean)
-     usersmanagment = Column(Boolean)
-     modyfingrules = Column(Boolean)
+db = SQLAlchemy(app)
+class Ranga(db.Model):
+     id = db.Column(db.Integer(), primary_key=True)
+     name = db.Column(db.String, unique=True)
+     addingpost = db.Column(db.Boolean)
+     postmanagment = db.Column(db.Boolean)
+     usersmanagment = db.Column(db.Boolean)
+     modyfingrules = db.Column(db.Boolean)
+     users = db.relationship('Urzyszkodnik', lazy=True)
      def __init__(self, name, addingpost, postmanagment, usersmanagment, modyfingrules):
           self.name = name
           self.addingpost = addingpost
@@ -34,38 +31,33 @@ class Ranga(Base):
           # self.postmanagment = postmanagment
      def __repr__(self):
           return(self.id, self.name, self.addingpost, self.usersmanagment, self.modyfingrules)
-class Urzyszkodnik(Base):
-     __tablename__='urzyszkodniki'
-     id = Column(Integer, primary_key=True)
-     name = Column(String, unique=True)
-     password = Column(String, nullable=False)
-     rola = Column(Integer, nullable=False, default=0)
-     def __init__(self, id, name, password, rola):
-          self.id = id
+class Urzyszkodnik(db.Model):
+     id = db.Column(db.Integer, primary_key=True)
+     name = db.Column(db.String, unique=True)
+     password = db.Column(db.String, nullable=False)
+     rola = db.Column(db.Integer, db.ForeignKey('ranga.id'), nullable=False, default=0)
+     def __init__ (self, name='', password='', rola=1):
           self.name = name
-          self.password=password
-          self.rola=rola
-     def __repr__(self):
-          return self.id, self.name, self.password, self.rola
-class Dzial(Base):
-     __tablename__="dzialy"
-     id=Column(Integer, primary_key=True)
-     tytul = Column(String)
-     tresc = Column(String)
+          self.password = password
+          self.rola = rola
+class Dzial(db.Model):
+     id=db.Column(db.Integer, primary_key=True)
+     tytul = db.Column(db.String)
+     tresc = db.Column(db.String)
      def __init__(self, tytul, tresc):
           self.tytul=tytul
           self.tresc=tresc
      def __repr__(self):
           return self.tytul, self.tresc
-class Post(Base):
+class Post(db.Model):
      __tablename__="posty"
-     id=Column(Integer, primary_key=True)
-     tytul = Column(String)
-     tresc = Column(String)
-     autorid=Column(Integer, ForeignKey(Urzyszkodnik.id))
-     dzialid=Column(Integer, ForeignKey(Dzial.id))
-     create_date=Column(DateTime(timezone=False), server_default=func.now())
-     # dzialid=Column(Integer, )
+     id=db.Column(db.Integer, primary_key=True)
+     tytul = db.Column(db.String)
+     tresc = db.Column(db.String)
+     autorid=db.Column(db.Integer, db.ForeignKey(Urzyszkodnik.id))
+     dzialid=db.Column(db.Integer, db.ForeignKey(Dzial.id))
+     create_date=db.Column(db.DateTime(timezone=False), server_default=db.func.now())
+     # dzialid=db.Column(db.Integer, )
      def __init__(self, tytul, tresc, autorid, dzialid):
           self.tytul=tytul
           self.tresc=tresc
@@ -73,31 +65,27 @@ class Post(Base):
           self.dzialid=dzialid
      def __repr__(self):
           return self.id, self.tytul, self.tresc, self.autorid
-class Comment(Base):
+class Comment(db.Model):
      __tablename__="comments"
-     id = Column(Integer, primary_key=True)
-     postid = Column(Integer)
-     autorid= Column(Integer, ForeignKey(Urzyszkodnik.id))
-     comment = Column(String)
+     id = db.Column(db.Integer, primary_key=True)
+     postid = db.Column(db.Integer)
+     autorid= db.Column(db.Integer, db.ForeignKey(Urzyszkodnik.id))
+     comment = db.Column(db.String)
      def __init__(self, postid, autorid, comment):
           self.postid = postid
           self.autorid=autorid
           self.comment= comment
 
-engine = create_engine('sqlite:///base.db', echo=True,
-     connect_args={'check_same_thread': False})
-Base.metadata.create_all(engine)
-Session = sessionmaker(bind=engine)
-session = Session()
+db.create_all()
+session = db.session
 def sprawdzenierangi(uprawnienie):
      permited=False
      try:
-          rola=session.query(Urzyszkodnik).filter(Urzyszkodnik.id == flasksession["user_id"]).first().rola
-          permited=getattr(session.query(Ranga).filter(Ranga.id == rola).first(), str(uprawnienie))
+          user=session.query(Urzyszkodnik).filter(Urzyszkodnik.id == flasksession["user_id"]).first().rola
+          permissions = session.query(Ranga).filter(Ranga.id == user).first()
+          permited=getattr(permissions, str(uprawnienie))
      except:
           None
-     if not permited == True:
-          permited == False
      return(permited)
 def get_hashed_password(plain_text_password):
     return bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
@@ -105,12 +93,13 @@ def check_password(plain_text_password, hashed_password):
     return bcrypt.checkpw(plain_text_password.encode('utf-8'), hashed_password)
 
 if session.query(Ranga).filter(Ranga.id==1).all() == []:
-     adminlogin = input("Type admin login")
-     password = input("type admin password")
+     adminlogin = input("admin login: ")
+     session.add(Ranga("Admin", True, True, True, True))
+     password = input("admin password: ")
      session.add(Ranga("Wyciszony", False, False, False, False))
      session.add(Ranga("Normalny użytkownik", True, False, False, False))
-     session.add(Ranga("Admin", True, True, True, True))
-     session.add(Urzyszkodnik(0 , adminlogin, get_hashed_password(password)), 3)
+     admin = session.query(Ranga).filter(Ranga.name == 'Admin').first()
+     session.add(Urzyszkodnik(adminlogin, get_hashed_password(password)), admin.id)
      session.commit()
 
 @app.route("/")
@@ -129,7 +118,7 @@ def index():
      typ="dzial"
      ))
 # @app.route("/postmanagment")
-@app.route("/addpost", methods = ['POST', 'GET'])
+@app.route("/add/post", methods = ['POST', 'GET'])
 def addpost():
      if sprawdzenierangi("addingpost") == True:
           if request.method == 'POST':
@@ -154,15 +143,14 @@ def addpost():
 @app.route("/rejestracja", methods = ['POST', 'GET'])
 def rejestruj():
      if request.method == 'POST':
-          nextid=session.query(Urzyszkodnik).order_by(Urzyszkodnik.id.desc()).first().id
-          session.add(Urzyszkodnik(int(nextid)+1 ,request.form['imie'], get_hashed_password(request.form['password']), 2))
+          session.add(Urzyszkodnik(request.form['imie'], get_hashed_password(request.form['password']), 2))
           session.commit()
           return(redirect("/"))
      elif request.method == 'GET':
           return(render_template('rejestracja.html'))
 @app.route("/dzial/<postid>")
 def dzial(postid):
-     autors.clear()
+     autors = []
      posty=session.query(Post).filter(Post.dzialid == postid).all()
      usersmanagment=sprawdzenierangi("usersmanagment")
      postmanagment=sprawdzenierangi('postmanagment')
@@ -222,7 +210,7 @@ def removecomment(commentid):
 @app.route("/post/<postid>", methods=["POST", "GET"])
 def post(postid):
      if request.method == "GET":
-          autors.clear()
+          autors = []
           postt=session.query(Post).filter(Post.id == postid).first()
           try:
                autor=session.query(Urzyszkodnik).filter(Urzyszkodnik.id==postt.autorid).first().name
@@ -260,11 +248,11 @@ def login():
           flasksession.pop('user_id', None)
           nick=request.form["nick"]
           password=request.form["password"]
-          urzyszkodniki=session.query(Urzyszkodnik).order_by(Urzyszkodnik.id).all()
-          for i in range(len(urzyszkodniki)):
-               if urzyszkodniki[i].name == nick and check_password(password, urzyszkodniki[i].password):
-                    flasksession['user_id'] = i
-                    flasksession['user_name'] = urzyszkodniki[i].name
+          users = session.query(Urzyszkodnik).filter(Urzyszkodnik.name == nick).all()
+          for i in users:
+               if i.name == nick and check_password(password, i.password):
+                    flasksession['user_id'] = i.id
+                    flasksession['user_name'] = i.name
                     print("Udało się zalogować")
                     success=True
           if success:
@@ -355,6 +343,6 @@ def zarzadzaniekontem():
 def changeprofilephoto():
      f=request.files.get("file")
      print(':*:*:*:*:*:', f)
-     f.save()
+     f.save('static/profilephotos/'+str(flasksession["user_id"])+'.jpg')
      return(redirect("/konto"))
 app.run(host="0.0.0.0", port="8080")

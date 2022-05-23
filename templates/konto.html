@@ -31,8 +31,8 @@
         <div class="card-body">
           <div class="row">
           <div class="col-md-2 col-12 text-center">
-            <form method="POST" action="{{url_for('changeprofilephoto')}}">
-            <input name="file" accept="image/*" class="inputimage" onchange="form.submit()" type="file">
+            <form method="POST" action="{{url_for('changeprofilephoto')}}" enctype="multipart/form-data">
+            <input name="file" accept="image/*" class="inputimage" onchange="form.submit()" type="file" multiple>
             <img class="profilephoto rounded-circle" src="{{url_for('profilowka')}}">
             </form>
           </div>
