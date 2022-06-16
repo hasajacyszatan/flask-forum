@@ -1,43 +1,40 @@
-<!doctype html>
-<html>
-  <head>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>        
-  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
-  </head>
-    <title>Dodaj post</title>
-  </head>
-  <body>
-    <style>
-      .tresc{
-        width: 100%;
-      }
-    </style>
-    <div class="container">
+{% extends 'base.html' %}
+
+{% block scripts %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
+<script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
+
+{% endblock %}
+
+{% block content %}
       <div class="row">
         <div class="col">
           <div class="card">
             <div class="card-header"> dodaj post  </div>
             <div class="card-body">
-              <form action="/dodaj" method="post">
+              <form action="/add/post" method="post">
                 <div class="row">
-                <input class="w-25" type="text" placeholder="tytył" name="tytul">
-                wybierz dział:
-                <select name="dzial">
-                  {% for i in dzialy %} 
-                  <option value="{{i.id}}">{{i.tytul}}</option>
-                  {% endfor %}
-                </select>
-                <textarea class="tresc w-100" type="text" placeholder="treść postu" name="trescpostu"></textarea>
-                <button class="w-100 btn btn-primary" type="submit">dodaj post</button>
+                <input class="col-12 form-control" type="text" placeholder="tytył" name="title">
+                <div class="col-12">
+                  <textarea class="tresc col-12 w-100" type="text" placeholder="treść postu" name="content"></textarea>
+                  <script>
+                    const easyMDE = new EasyMDE();
+                  </script>
                 </div>
+                    <div class="col-12">
+                      wybierz dział:
+                      <select name="section">
+                      {% for i in dzialy %} 
+                      <option value="{{i.id}}">{{i.title}}</option>
+                      {% endfor %}
+                      </select>
+                    </div>
+                <button class="w-100 btn btn-primary" type="submit">dodaj post</button>
+              </div>
               </form>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </body>
-</html>
+
+{% endblock %}

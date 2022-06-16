@@ -7,7 +7,7 @@
   	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
   </head>
-    <title>{{post.tytul}}</title>
+    <title>{{post.title}}</title>
   </head>
   <body>
     <div class="container">
@@ -15,13 +15,13 @@
         <div class="col-12">
       <div class="card">
         <div class="card-header">
-          <h1>{{post.tytul}}</h1>
+          <h1>{{post.title}}</h1>
           <div class="badge badge-secondary">{{autor}}</div>
           <div class="badge badge-secondary">{{dzial}}</div>
           <div class="badge badge-secondary">{{post.create_date}}</div>
         </div>
         <div class="card-body">
-          <p style="white-space: pre-line">{{post.tresc}}</p>
+          <p style="white-space: pre-line">{{post.content}}</p>
           <br>
             </div>
           </div>

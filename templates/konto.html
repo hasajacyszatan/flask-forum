@@ -7,7 +7,7 @@
   	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
   </head>
-    <title>{{konto.name}}</title>
+    <title>{{user.name}}</title>
     <style type="text/css">
       .nick{
         border: none;
@@ -27,7 +27,7 @@
   <body>
     <div class="container">
       <div class="card ">
-        <div class="card-header"><h1>Zarządzanie kontem</h1><span>kliknij by edytować</span><a style="float: right;" href="/admin/users/{{konto.id}}/remove"><button class="btn btn-primary">usuń konto</button></a></div>
+        <div class="card-header"><h1>Zarządzanie kontem</h1><span>kliknij by edytować</span><a style="float: right;" href="/admin/users/{{user.id}}/remove"><button class="btn btn-primary">usuń konto</button></a></div>
         <div class="card-body">
           <div class="row">
           <div class="col-md-2 col-12 text-center">
@@ -37,8 +37,8 @@
             </form>
           </div>
           <div class="col-md-10 col-12">
-          <h2 class="text-center"> <b>Użytkownik:</b><form method="POST"><input placeholder="{{konto.name}}" type="text" name="nick" class="nick w-100 text-center"></form></h2>
-          <h2><span class="badge badge-dark badge-pill">{{rola}}</span></h2>
+          <h2 class="text-center"> <b>Użytkownik:</b><form method="POST"><input placeholder="{{user.name}}" type="text" name="nick" class="nick w-100 text-center"></form></h2>
+          <h2><span class="badge badge-dark badge-pill">{{user.rola.name}}</span></h2>
           </div>
           </div>
         </div>

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+  <div class="col-12">
+<div class="card">
+  <div class="card-header">
+    <h1>{{post.title}}</h1>
+    <div class="badge badge-secondary">{{autor}}</div>
+    <div class="badge badge-secondary">{{dzial}}</div>
+    <div class="badge badge-secondary">{{post.create_date}}</div>
+  </div>
+  <div class="card-body">
+    {% filter markdown %}
+    {{post.content}}
+    {% endfilter %}
+    <br>
+      </div>
+    </div>
+    </div>
+    <div class="col-12">
+    <div class="card" style="color:white ; margin-top: 1%; background-color: #555;">
+      <div class="card-header" style="color:white ;"><h3>Answers:</h3></div>
+      <div class="card-body">
+        {% if zalogowany %}
+          <p>
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+          dodaj komentarz
+        </button>
+      </p>
+      <div class="collapse" id="collapseExample" style="margin: 1%">
+        <div class="card card-body">
+      <form method="POST">
+        <textarea name="komentarz" class="w-100"></textarea>
+        <button action="submit" class="btn-primary btn">
+          dodaj
+        </button>
+      </form>
+        </div>
+        {% else %}
+        <p>Log in to comment</p>
+        {% endif %}
+      </div>
+        {% for i in range(ilosckomentarzy) %}
+        <div class="card" style="margin: 2%; color:black ;">
+          <div class="card-header">
+            {% if postmanagment %}
+            <a href="{{url_for('removecomment', commentid=komentarze[i].id)}}" style="float: right;"><button class="btn btn-danger">remove</button></a>
+            {% endif %}
+            <h4>{{autors[i]}}</h4>
+          </div>
+          <div class="card-body">
+            {{komentarze[i].comment}}
+          </div>
+        </div>
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -7,12 +7,12 @@
         <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">   
   	<meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
-    <title>Zarządzanie {{user}}</title>
+    <title>Zarządzanie {{user.name}}</title>
   </head>
   <body>
     <div class="container">
       <div class="card">
-        <div class="card-header"><h1>Wybierz role dla {{user}}</h1></div>
+        <div class="card-header"><h1>Wybierz role dla {{user.name}}</h1></div>
         <div class="card-body">
           <form method="POST">
             <select name="rola">

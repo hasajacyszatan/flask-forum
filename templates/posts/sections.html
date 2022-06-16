@@ -60,21 +60,17 @@
           <div class="card">
             <div class="card-header">
               {% if postmanagment %}
-              {%if typ=="post"%}
-              <a style="float: right;"  href="{{ url_for('removepost', postid=dzialy[i].id) }}"><button class="btn btn-danger">remove</button></a>
-              {% else %}
-              <a style="float: right;"  href="{{ url_for('removedzial', dzialid=dzialy[i].id) }}"><button class="btn btn-danger">remove</button></a>
+              <a style="float: right;"  href="{{ url_for('removedzial', dzialid=sections[i].id) }}"><button class="btn btn-danger">remove</button></a>
               {% endif %}
-              {% endif %}
-            <a href="{{url_for(typ, postid=dzialy[i].id)}}">
-              {{dzialy[i].tytul}}
+            <a href="{{url_for(urlfor, postid=sections[i].id)}}">
+              {{sections[i].title}}
             </a>
-              {% if typ == "post" %}
+              {% if urlfor == "post" %}
               <br>
               <div class="badge badge-primary">{{autors[i]}}</div>
               {% endif %}
             </div>
-            <div class="card-body">{{dzialy[i].tresc[:120]}}</div>
+            <div class="card-body">{{sections[i].description}}</div>
           </div>
         </div>
         {% endfor %}
